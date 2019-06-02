@@ -12,7 +12,12 @@ public class ConcreteCharSupplier implements CharSupplier {
 
     @Override
     public char nextChar() {
-        return sourceCode.charAt(position++);
+        return sourceCode.charAt(position);
+    }
+
+    @Override
+    public void advance() {
+        position++;
     }
 
     @Override

@@ -31,10 +31,12 @@ public class ConcreteLexer implements Lexer {
         List<LexerAutomata> validAutomatas = new ArrayList<>(automatas);
 
         while(validAutomatas.size() > 0 && charSupplier.hasNext()){
-            validAutomatas = validAutomatas.stream().filter(a -> a.run(charSupplier.nextChar())).collect(Collectors.toList());
+            char input = charSupplier.nextChar();
+            validAutomatas = validAutomatas.stream().filter(a -> a.run(input)).collect(Collectors.toList());
+            if(!validAutomatas.isEmpty()) charSupplier.advance();
         }
 
-        for (LexerAutomata a : validAutomatas) {
+        for (LexerAutomata a : automatas) {
             Token tkn = a.getGeneratedToken();
             if (tkn != null) return tkn;
         }

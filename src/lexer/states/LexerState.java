@@ -1,4 +1,4 @@
-package lexer;
+package lexer.states;
 
 public interface LexerState {
 
