@@ -3,6 +3,7 @@ package main;
 import lexer.*;
 import lexer.states.number.NumberInitialState;
 import lexer.states.number_literal.NumberLiteralInitialState;
+import lexer.states.print.PrintInitialState;
 import lexer.states.string_literal.StringLiteralInitialState;
 import lexer.states.symbols.*;
 import lexer.states.identifier.IdentifierInitialState;
@@ -34,8 +35,7 @@ public class Main {
     }
 
     private static String readFile(String[] args) throws IOException {
-//        String filePath = "./src/examples/class-example.txt";
-        String filePath = "./src/examples/simple.txt";
+        String filePath = "./src/examples/class-example.txt";
         if(args.length > 0) filePath = args[0];
         return new String(Files.readAllBytes(Paths.get(filePath)));
 
@@ -62,6 +62,7 @@ public class Main {
                 new ConcreteLexerAutomata(new NumberLiteralInitialState(), TokenType.NUMERIC_LITERAL),
                 new ConcreteLexerAutomata(new StringInitialState(), TokenType.STRING),
                 new ConcreteLexerAutomata(new NumberInitialState(), TokenType.NUMBER),
+                new ConcreteLexerAutomata(new PrintInitialState(), TokenType.PRINT),
                 new ConcreteLexerAutomata(new IdentifierInitialState(), TokenType.IDENTIFIER)
         ).collect(Collectors.toList());
 
