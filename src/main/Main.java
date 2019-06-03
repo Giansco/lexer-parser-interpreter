@@ -1,11 +1,10 @@
 package main;
 
 import lexer.*;
+import lexer.states.number.NumberInitialState;
+import lexer.states.number_literal.NumberLiteralInitialState;
 import lexer.states.string_literal.StringLiteralInitialState;
-import lexer.states.symbols.EqualsInitialState;
-import lexer.states.symbols.SemiColonInitialState;
-import lexer.states.symbols.WhiteSpaceInitialState;
-import lexer.states.symbols.ColonInitialState;
+import lexer.states.symbols.*;
 import lexer.states.identifier.IdentifierInitialState;
 import lexer.states.let.LetInitialState;
 import lexer.states.string.StringInitialState;
@@ -35,7 +34,8 @@ public class Main {
     }
 
     private static String readFile(String[] args) throws IOException {
-        String filePath = "./src/examples/class-example.txt";
+//        String filePath = "./src/examples/class-example.txt";
+        String filePath = "./src/examples/simple.txt";
         if(args.length > 0) filePath = args[0];
         return new String(Files.readAllBytes(Paths.get(filePath)));
 
@@ -50,9 +50,18 @@ public class Main {
                 new ConcreteLexerAutomata(new ColonInitialState(), TokenType.COLON),
                 new ConcreteLexerAutomata(new SemiColonInitialState(), TokenType.SEMI_COLON),
                 new ConcreteLexerAutomata(new EqualsInitialState(), TokenType.EQUALS),
+                new ConcreteLexerAutomata(new MinusInitialState(), TokenType.MINUS),
+                new ConcreteLexerAutomata(new NewLineInitialState(), TokenType.NEW_LINE),
+                new ConcreteLexerAutomata(new PlusInitialState(), TokenType.PLUS),
+                new ConcreteLexerAutomata(new MultiplyInitialState(), TokenType.MULTIPLY),
+                new ConcreteLexerAutomata(new DivideInitialState(), TokenType.DIVIDE),
+                new ConcreteLexerAutomata(new OpenParenthesisInitialState(), TokenType.OPEN_PARENTHESIS),
+                new ConcreteLexerAutomata(new CloseParenthesisInitialState(), TokenType.CLOSE_PARENTHESIS),
                 new ConcreteLexerAutomata(new LetInitialState(), TokenType.LET),
                 new ConcreteLexerAutomata(new StringLiteralInitialState(), TokenType.STRING_LITERAL),
+                new ConcreteLexerAutomata(new NumberLiteralInitialState(), TokenType.NUMERIC_LITERAL),
                 new ConcreteLexerAutomata(new StringInitialState(), TokenType.STRING),
+                new ConcreteLexerAutomata(new NumberInitialState(), TokenType.NUMBER),
                 new ConcreteLexerAutomata(new IdentifierInitialState(), TokenType.IDENTIFIER)
         ).collect(Collectors.toList());
 

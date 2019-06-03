@@ -5,6 +5,6 @@ import lexer.Token;
 public class Printer {
 
     public static void printToken(Token token){
-        System.out.println("<"+token.getTokenType()+", "+token.getContent()+">");
+        System.out.print("<"+token.getTokenType()+", "+token.getContent()+">");
     }
 }
