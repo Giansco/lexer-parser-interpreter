@@ -11,18 +11,13 @@ public class TransitionState extends AbstractParserState {
     private Map<ASTNode, ParserState> transitions;
 
     public TransitionState(ParserAutomata automata, Map<ASTNode, ParserState> transitions) {
-        super(automata);
-        this.transitions = transitions;
+        super(automata, transitions);
     }
 
     @Override
     public Stack<ASTNode> handle(Stack<ASTNode> stack, ParserState previous) {
 
-        ParserState parserState = transitions.get(stack.peek());
-
-        automata.setState(parserState);
-
-        return parserState.handle(stack, this);
+        return super.handle(stack,previous);
     }
 
     @Override
