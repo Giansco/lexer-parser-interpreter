@@ -1,6 +1,11 @@
 package parser;
 
-public enum ParserType {
+public enum InputType {
+    STATEMENT,
+    ASSIGNMENT,
+    EXPRESSION,
+    TERM,
+
     NUMERIC_LITERAL,
     STRING_LITERAL,
     LET,
@@ -16,17 +21,5 @@ public enum ParserType {
     MULTIPLY,
     DIVIDE,
     EQUALS,
-
     IDENTIFIER,
-    LITERAL,
-    TYPE,
-    MULTIPLICATIVE_EXPRESSION,
-    ADDITIVE_EXPRESSION,
-    INITIALIZER,
-    TYPE_ANNOTATION,
-    VARIABLE_DECLARATION,
-    ASSIGNATION,
-    PRINT_DECLARATION,
-    STATEMENT,
-    $
 }
