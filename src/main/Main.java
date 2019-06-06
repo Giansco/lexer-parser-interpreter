@@ -72,8 +72,4 @@ public class Main {
 
         lex.forEach(Printer::printToken);
     }
-
-    private void generateLetStates(){
-
-    }
 }
