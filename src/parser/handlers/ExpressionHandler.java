@@ -3,6 +3,7 @@ package parser.handlers;
 import parser.Input;
 import parser.InputSupplier;
 import parser.InputType;
+import parser.tree.AssignmentNode;
 import parser.tree.expressions.AdditionNode;
 import parser.tree.Node;
 import parser.tree.expressions.SimpleExpressionNode;
@@ -24,23 +25,26 @@ public class ExpressionHandler implements Handler {
         Node expressionNode = new SimpleExpressionNode(termNode); //Add expression node
 
         if (supplier.hasNext()){
-            Input input = supplier.nextInput();
-            if (input.getType() == InputType.PLUS){
-                supplier.advance();
-                Node termNode2 = termHandler.handle(supplier);
-                return new AdditionNode(expressionNode, termNode2);
-            }else if (input.getType() == InputType.MINUS){
-                supplier.advance();
-                Node termNode2 = termHandler.handle(supplier);
-                return new SubtractionNode(expressionNode, termNode2);
-            }else{
-                //not an operator
-                return expressionNode;
-            }
+            return recursiveHandle(expressionNode, supplier);
         }else {
             return expressionNode;
         }
+    }
 
-//        throw new SyntaxErrorExc();
+    private Node recursiveHandle(Node exp, InputSupplier supplier){
+
+        Input input = supplier.nextInput();
+        if (input.getType() == InputType.PLUS){
+            supplier.advance();
+            Node termNode = termHandler.handle(supplier);
+            return recursiveHandle(new AdditionNode(exp, termNode), supplier);
+        }else if (input.getType() == InputType.MINUS){
+            supplier.advance();
+            Node termNode = termHandler.handle(supplier);
+            return recursiveHandle(new SubtractionNode(exp, termNode), supplier);
+        }else{
+            //not an operator
+            return exp;
+        }
     }
 }

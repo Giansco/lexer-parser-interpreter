@@ -22,23 +22,28 @@ public class TermHandler implements Handler {
     public Node handle(InputSupplier supplier) {
 
         Node literalNode = literalHandler.handle(supplier);
-        Node termNode = new SimpleTermNode(literalNode); //Add expression node
+        Node termNode = new SimpleTermNode(literalNode); //Add term node
         if (supplier.hasNext()){
-            Input input = supplier.nextInput();
-            if (input.getType() == InputType.DIVIDE){
-                supplier.advance();
-                Node literalNode2 = literalHandler.handle(supplier);
-                return new DivisionNode(termNode, literalNode2);
-            }else if (input.getType() == InputType.MULTIPLY){
-                supplier.advance();
-                Node literalNode2 = literalHandler.handle(supplier);
-                return new MultiplicityNode(termNode, literalNode2);
-            }else{
-                //not an operator
-                return termNode;
-            }
+            return recursiveHandle(termNode, supplier);
         }else {
             return termNode;
+        }
+    }
+
+    private Node recursiveHandle(Node term, InputSupplier supplier){
+
+        Input input = supplier.nextInput();
+        if (input.getType() == InputType.DIVIDE){
+            supplier.advance();
+            Node literalNode = literalHandler.handle(supplier);
+            return recursiveHandle(new DivisionNode(term, literalNode), supplier);
+        }else if (input.getType() == InputType.MULTIPLY){
+            supplier.advance();
+            Node literalNode = literalHandler.handle(supplier);
+            return recursiveHandle(new MultiplicityNode(term, literalNode), supplier);
+        }else{
+            //not an operator
+            return term;
         }
     }
 }

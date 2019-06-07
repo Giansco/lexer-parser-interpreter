@@ -49,7 +49,7 @@ public class Main {
     }
 
     private static String readFile(String[] args) throws IOException {
-        String filePath = "./src/examples/class-example.txt";
+        String filePath = "./src/examples/simple.txt";
         if(args.length > 0) filePath = args[0];
         return new String(Files.readAllBytes(Paths.get(filePath)));
 
