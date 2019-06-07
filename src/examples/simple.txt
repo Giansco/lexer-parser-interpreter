@@ -1,3 +1,3 @@
 let pepe: string = "hola";
-let pepito: number;
-pepito = 5.5 - 898;
+letad pepito: number;
+pepito = 5.5 - 8;

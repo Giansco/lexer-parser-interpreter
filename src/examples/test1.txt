@@ -13,3 +13,8 @@ a-123
 a*123
 12++12
 a/12
+
+errors:
+pepito = 5.5 -- 8;
+let pepito: numberooo;
+letad pepito: number;

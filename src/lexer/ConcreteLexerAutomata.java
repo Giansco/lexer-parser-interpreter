@@ -23,7 +23,7 @@ public class ConcreteLexerAutomata implements LexerAutomata {
     public boolean run(char input) {
         currentState = currentState.nextState(input);
         if (currentState.getDescription().equals("NoValidTransition")) return false;
-        tokenContent += input;
+        if(input != '\'' && input != '\"') tokenContent += input;
         if(currentState.isAcceptanceState()) generatedToken = new ConcreteToken(tokenType, tokenContent);
         return true;
     }

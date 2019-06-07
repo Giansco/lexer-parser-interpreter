@@ -1,16 +1,23 @@
 package parser.tree;
 
-import com.sun.org.apache.xpath.internal.ExpressionNode;
+import parser.tree.literals.IdentifierNode;
 
 public class AssignmentNode implements Node{
 
-    private IdentifierNode identifierNode;
-    private EqualsNode equalsNode;
+    private Node identifierNode;
     private Node expressionNode;
+    //should have equals node???
 
-    public AssignmentNode(IdentifierNode identifierNode, EqualsNode equalsNode, Node expressionNode) {
+    public AssignmentNode(Node identifierNode, Node expressionNode) {
         this.identifierNode = identifierNode;
-        this.equalsNode = equalsNode;
         this.expressionNode = expressionNode;
+    }
+
+    public Node getIdentifierNode() {
+        return identifierNode;
+    }
+
+    public Node getExpressionNode() {
+        return expressionNode;
     }
 }
