@@ -10,6 +10,7 @@ public class ConcreteLexerAutomata implements LexerAutomata {
     private Token generatedToken;
     private String tokenContent;
     private TokenType tokenType;
+    private int amountProcessed;
 
     public ConcreteLexerAutomata(LexerState initialState, TokenType tokenType) {
         this.initialState = initialState;
@@ -17,6 +18,7 @@ public class ConcreteLexerAutomata implements LexerAutomata {
         generatedToken = null;
         tokenContent = "";
         this.tokenType = tokenType;
+        this.amountProcessed = 0;
     }
 
     @Override
@@ -24,6 +26,7 @@ public class ConcreteLexerAutomata implements LexerAutomata {
         currentState = currentState.nextState(input);
         if (currentState.getDescription().equals("NoValidTransition")) return false;
         if(input != '\'' && input != '\"') tokenContent += input;
+        amountProcessed++;
         if(currentState.isAcceptanceState()) generatedToken = new ConcreteToken(tokenType, tokenContent);
         return true;
     }
@@ -38,5 +41,13 @@ public class ConcreteLexerAutomata implements LexerAutomata {
         currentState = initialState;
         generatedToken = null;
         tokenContent = "";
+        amountProcessed = 0;
     }
+
+    @Override
+    public int getAmountProcessed() {
+        return amountProcessed;
+    }
+
+
 }

@@ -2,9 +2,10 @@ package lexer.states.symbols;
 
 import lexer.NoValidTransitionState;
 import lexer.states.AbstractAcceptingLexerState;
+import lexer.states.AbstractNormalLexerState;
 import lexer.states.LexerState;
 
-public class OpenParenthesisInitialState extends AbstractAcceptingLexerState{
+public class OpenParenthesisInitialState extends AbstractNormalLexerState {
 
 
     public OpenParenthesisInitialState() {
@@ -13,7 +14,7 @@ public class OpenParenthesisInitialState extends AbstractAcceptingLexerState{
 
     @Override
     public LexerState nextState(char input) {
-        if(input == '(') return new OpenParenthesisInitialState();
+        if(input == '(') return new OpenParenthesisFirstState();
         else return new NoValidTransitionState();
     }
 }

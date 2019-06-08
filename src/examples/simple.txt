@@ -1,5 +1,5 @@
 let pepe: string = "hola";
-letad pepito: number;
+let pepito: number;
 pepito = 5 + 8 * 9;
 
 print(pepito + pepe + "mundo");

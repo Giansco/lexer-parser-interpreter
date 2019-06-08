@@ -24,4 +24,14 @@ public class ConcreteCharSupplier implements CharSupplier {
     public boolean hasNext() {
         return position < sourceCode.length();
     }
+
+    @Override
+    public int getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(int pos) {
+        position = pos;
+    }
 }

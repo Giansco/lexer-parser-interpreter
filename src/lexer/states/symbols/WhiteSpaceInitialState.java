@@ -2,9 +2,10 @@ package lexer.states.symbols;
 
 import lexer.NoValidTransitionState;
 import lexer.states.AbstractAcceptingLexerState;
+import lexer.states.AbstractNormalLexerState;
 import lexer.states.LexerState;
 
-public class WhiteSpaceInitialState extends AbstractAcceptingLexerState {
+public class WhiteSpaceInitialState extends AbstractNormalLexerState {
 
 
     public WhiteSpaceInitialState() {
@@ -13,7 +14,7 @@ public class WhiteSpaceInitialState extends AbstractAcceptingLexerState {
 
     @Override
     public LexerState nextState(char input) {
-        if(input == ' ' || input == '\t') return new WhiteSpaceInitialState();
+        if(input == ' ' || input == '\t') return new WhiteSpaceFirstState();
         else return new NoValidTransitionState();
     }
 }

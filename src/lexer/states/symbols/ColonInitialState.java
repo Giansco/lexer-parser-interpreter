@@ -2,9 +2,10 @@ package lexer.states.symbols;
 
 import lexer.NoValidTransitionState;
 import lexer.states.AbstractAcceptingLexerState;
+import lexer.states.AbstractNormalLexerState;
 import lexer.states.LexerState;
 
-public class ColonInitialState extends AbstractAcceptingLexerState{
+public class ColonInitialState extends AbstractNormalLexerState {
 
 
     public ColonInitialState() {
@@ -13,7 +14,7 @@ public class ColonInitialState extends AbstractAcceptingLexerState{
 
     @Override
     public LexerState nextState(char input) {
-        if(input == ':') return new ColonInitialState();
+        if(input == ':') return new ColonFirstState();
         else return new NoValidTransitionState();
     }
 }

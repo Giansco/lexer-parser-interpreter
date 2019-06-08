@@ -30,6 +30,8 @@ public class ConcreteLexer implements Lexer {
 
         List<LexerAutomata> validAutomatas = new ArrayList<>(automatas);
 
+        int initialPosition = charSupplier.getPosition();
+
         while(validAutomatas.size() > 0 && charSupplier.hasNext()){
             char input = charSupplier.nextChar();
             validAutomatas = validAutomatas.stream().filter(a -> a.run(input)).collect(Collectors.toList());
@@ -38,7 +40,10 @@ public class ConcreteLexer implements Lexer {
 
         for (LexerAutomata a : automatas) {
             Token tkn = a.getGeneratedToken();
-            if (tkn != null) return tkn;
+            if (tkn != null){
+                charSupplier.setPosition(initialPosition + a.getAmountProcessed());
+                return tkn;
+            }
         }
 
         throw new NoMatchFoundExc();

@@ -2,9 +2,10 @@ package lexer.states.symbols;
 
 import lexer.NoValidTransitionState;
 import lexer.states.AbstractAcceptingLexerState;
+import lexer.states.AbstractNormalLexerState;
 import lexer.states.LexerState;
 
-public class SemiColonInitialState extends AbstractAcceptingLexerState {
+public class SemiColonInitialState extends AbstractNormalLexerState {
 
 
     public SemiColonInitialState() {
@@ -13,7 +14,7 @@ public class SemiColonInitialState extends AbstractAcceptingLexerState {
 
     @Override
     public LexerState nextState(char input) {
-        if(input == ';') return new SemiColonInitialState();
+        if(input == ';') return new SemiColonFirstState();
         else return new NoValidTransitionState();
     }
 }
