@@ -1,6 +1,6 @@
 package lexer.states.number_literal;
 
-import lexer.NoValidTransitionState;
+import lexer.states.NoValidTransitionState;
 import lexer.states.AbstractAcceptingLexerState;
 import lexer.states.LexerState;
 

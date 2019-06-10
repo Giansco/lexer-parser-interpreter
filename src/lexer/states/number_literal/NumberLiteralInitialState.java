@@ -1,10 +1,8 @@
 package lexer.states.number_literal;
 
-import lexer.NoValidTransitionState;
+import lexer.states.NoValidTransitionState;
 import lexer.states.AbstractAcceptingLexerState;
-import lexer.states.AbstractNormalLexerState;
 import lexer.states.LexerState;
-import lexer.states.number.NumberFirstState;
 
 public class NumberLiteralInitialState extends AbstractAcceptingLexerState {
 

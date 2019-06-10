@@ -1,4 +1,4 @@
-package lexer.states;
+package lexer;
 
 import lexer.Token;
 import lexer.TokenType;

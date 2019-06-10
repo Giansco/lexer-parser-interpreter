@@ -1,6 +1,5 @@
 package lexer;
 
-import lexer.states.ConcreteToken;
 import lexer.states.LexerState;
 
 public class ConcreteLexerAutomata implements LexerAutomata {

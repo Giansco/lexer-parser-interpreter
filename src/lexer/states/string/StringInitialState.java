@@ -1,9 +1,8 @@
 package lexer.states.string;
 
-import lexer.NoValidTransitionState;
+import lexer.states.NoValidTransitionState;
 import lexer.states.AbstractNormalLexerState;
 import lexer.states.LexerState;
-import lexer.states.let.LetFirstState;
 
 public class StringInitialState extends AbstractNormalLexerState {
 
