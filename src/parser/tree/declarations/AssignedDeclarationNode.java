@@ -1,5 +1,6 @@
 package parser.tree.declarations;
 
+import main.parser_interpreter.NodeVisitor;
 import parser.tree.Node;
 
 public class AssignedDeclarationNode implements DeclarationNode {
@@ -24,5 +25,10 @@ public class AssignedDeclarationNode implements DeclarationNode {
 
     public Node getExpression() {
         return expression;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visitAssignedDeclarationNode(this);
     }
 }

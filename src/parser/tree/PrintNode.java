@@ -1,8 +1,10 @@
 package parser.tree;
 
+import main.parser_interpreter.NodeVisitor;
+
 public class PrintNode implements Node {
 
-    Node expressionNode;
+    private Node expressionNode;
 
     public PrintNode(Node expressionNode) {
         this.expressionNode = expressionNode;
@@ -10,5 +12,10 @@ public class PrintNode implements Node {
 
     public Node getExpressionNode() {
         return expressionNode;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visitPrintNode(this);
     }
 }

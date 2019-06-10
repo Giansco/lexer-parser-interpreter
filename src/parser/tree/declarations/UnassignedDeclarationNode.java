@@ -1,5 +1,6 @@
 package parser.tree.declarations;
 
+import main.parser_interpreter.NodeVisitor;
 import parser.tree.Node;
 
 public class UnassignedDeclarationNode implements DeclarationNode {
@@ -18,5 +19,10 @@ public class UnassignedDeclarationNode implements DeclarationNode {
 
     public Node getType() {
         return type;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visitUnassignedDeclarationNode(this);
     }
 }

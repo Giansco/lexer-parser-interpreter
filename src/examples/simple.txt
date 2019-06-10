@@ -1,5 +1,7 @@
 let pepe: string = "hola";
 let pepito: number;
-pepito = 5 + 8 * 9;
+pepito = 4 - 2 * 4 * 1 / 2;
 
 print(pepito + pepe + "mundo");
+
+print(pepe + " el mejor " + pepito);

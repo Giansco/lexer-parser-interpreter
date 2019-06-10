@@ -1,5 +1,7 @@
 package main;
 
+import interpreter.ConcreteInterpreter;
+import interpreter.Interpreter;
 import lexer.*;
 import lexer.states.number.NumberInitialState;
 import lexer.states.number_literal.NumberLiteralInitialState;
@@ -9,6 +11,8 @@ import lexer.states.symbols.*;
 import lexer.states.identifier.IdentifierInitialState;
 import lexer.states.let.LetInitialState;
 import lexer.states.string.StringInitialState;
+import main.parser_interpreter.ConcreteNodeVisitor;
+import main.parser_interpreter.NodeVisitor;
 import parser.*;
 import parser.handlers.*;
 import parser.tree.Node;
@@ -16,10 +20,7 @@ import parser.tree.Node;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,17 +36,16 @@ public class Main {
             return;
         }
 
-//        System.out.println(" ".matches("(?s)."));
-
         List<Token> tkn = lexerRun(sourceCode);
 
-        tkn.forEach(Printer::printToken);
+//        tkn.forEach(Printer::printToken);
 
+        //Change tokens from lexer to parser inputs
         List<Input> inputs = parserInputSetUp(tkn);
 
         Node result = parserRun(inputs);
 
-        System.out.println(result);
+        interpreterRun(result);
     }
 
     private static String readFile(String[] args) throws IOException {
@@ -144,5 +144,18 @@ public class Main {
         Parser parser = new ConcreteParser(resultHandler);
 
         return parser.parse(supplier);
+    }
+
+    private static void interpreterRun(Node node){
+
+        Iterator<Node> collect = Stream.of(node).iterator();
+
+        interpreter.InputSupplier supplier = new interpreter.ConcreteInputSupplier(collect);
+
+        NodeVisitor visitor = new ConcreteNodeVisitor();
+
+        Interpreter interpreter = new ConcreteInterpreter(visitor);
+
+        interpreter.interpret(supplier);
     }
 }

@@ -1,7 +1,7 @@
 package parser.tree.expressions;
 
+import main.parser_interpreter.NodeVisitor;
 import parser.tree.Node;
-import parser.tree.expressions.ExpressionNode;
 
 public class SimpleExpressionNode implements ExpressionNode {
 
@@ -9,5 +9,14 @@ public class SimpleExpressionNode implements ExpressionNode {
 
     public SimpleExpressionNode(Node child) {
         this.child = child;
+    }
+
+    public Node getChild() {
+        return child;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visitSimpleExpressionNode(this);
     }
 }

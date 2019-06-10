@@ -1,4 +1,6 @@
 package parser.tree;
 
-public interface Node {
+import main.parser_interpreter.Element;
+
+public interface Node extends Element {
 }

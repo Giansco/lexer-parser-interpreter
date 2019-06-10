@@ -1,6 +1,6 @@
 package parser.tree;
 
-import parser.tree.literals.IdentifierNode;
+import main.parser_interpreter.NodeVisitor;
 
 public class AssignmentNode implements Node{
 
@@ -19,5 +19,10 @@ public class AssignmentNode implements Node{
 
     public Node getExpressionNode() {
         return expressionNode;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visitAssignmentNode(this);
     }
 }

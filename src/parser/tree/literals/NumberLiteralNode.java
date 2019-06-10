@@ -1,6 +1,6 @@
 package parser.tree.literals;
 
-import parser.tree.literals.LiteralNode;
+import main.parser_interpreter.NodeVisitor;
 
 public class NumberLiteralNode implements LiteralNode {
 
@@ -8,5 +8,14 @@ public class NumberLiteralNode implements LiteralNode {
 
     public NumberLiteralNode(Double value) {
         this.value = value;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    @Override
+    public void accept(NodeVisitor visitor) {
+        visitor.visitNumberLiteralNode(this);
     }
 }
