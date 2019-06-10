@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ResultHandler implements Handler {
 
-    Handler statementHandler;
+    private Handler statementHandler;
 
     public ResultHandler(Handler statementHandler) {
         this.statementHandler = statementHandler;
