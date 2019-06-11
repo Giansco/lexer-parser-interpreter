@@ -37,11 +37,15 @@ public class DeclarationHandler implements Handler {
                     Node typeNode = typeHandler.handle(supplier);
 
                     //check for equals
-                    Input equals = supplier.nextInput(); //should check hasNext again
-                    if (equals.getType() == InputType.EQUALS){
-                        supplier.advance();
-                        Node expressionNode = expressionHandler.handle(supplier);
-                        return new AssignedDeclarationNode(identifierNode,typeNode,expressionNode);
+                    if(supplier.hasNext()){
+                        Input equals = supplier.nextInput(); //should check hasNext again
+                        if (equals.getType() == InputType.EQUALS){
+                            supplier.advance();
+                            Node expressionNode = expressionHandler.handle(supplier);
+                            return new AssignedDeclarationNode(identifierNode,typeNode,expressionNode);
+                        }else {
+                            return new UnassignedDeclarationNode(identifierNode, typeNode);
+                        }
                     }else {
                         return new UnassignedDeclarationNode(identifierNode, typeNode);
                     }

@@ -1,6 +1,6 @@
 let pepe: string = "hola";
 let pepito: number;
-pepito = 4 - 2 * 4 * 1 / 2;
+pepito = 4 + 2 * 4 * 1 / 2;
 
 print(pepito + pepe + "mundo");
 

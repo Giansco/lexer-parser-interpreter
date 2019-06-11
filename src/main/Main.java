@@ -38,7 +38,7 @@ public class Main {
 
         List<Token> tkn = lexerRun(sourceCode);
 
-//        tkn.forEach(Printer::printToken);
+        tkn.forEach(Printer::printToken);
 
         //Change tokens from lexer to parser inputs
         List<Input> inputs = parserInputSetUp(tkn);
@@ -55,7 +55,7 @@ public class Main {
 
     }
 
-    private static List<Token> lexerRun(String sourceCode){
+    public static List<Token> lexerRun(String sourceCode){
 
         CharSupplier charSupplier = new ConcreteCharSupplier(sourceCode);
 
@@ -85,14 +85,14 @@ public class Main {
         return lexer.lex(charSupplier);
     }
 
-    private static List<Input> parserInputSetUp(List<Token> tokens){
+    public static List<Input> parserInputSetUp(List<Token> tokens){
         return tokens.stream()
                 .map(tkn -> new ConcreteInput(fromLexerToParserType(tkn), tkn.getContent()))
                 .filter(inp -> inp.getType() != null)
                 .collect(Collectors.toList());
     }
 
-    private static InputType fromLexerToParserType(Token token){
+    public static InputType fromLexerToParserType(Token token){
         switch (token.getTokenType()){
             case LET: return InputType.LET;
             case NUMERIC_LITERAL: return InputType.NUMERIC_LITERAL;
@@ -114,7 +114,7 @@ public class Main {
         }
     }
 
-    private static Node parserRun(List<Input> inputs){
+    public static Node parserRun(List<Input> inputs){
 
         InputSupplier supplier = new ConcreteInputSupplier(inputs);
 
@@ -146,7 +146,7 @@ public class Main {
         return parser.parse(supplier);
     }
 
-    private static void interpreterRun(Node node){
+    public static void interpreterRun(Node node){
 
         Iterator<Node> collect = Stream.of(node).iterator();
 
