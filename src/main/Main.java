@@ -2,15 +2,13 @@ package main;
 
 import interpreter.ConcreteInterpreter;
 import interpreter.Interpreter;
-import lexer.*;
-import lexer.states.number.NumberInitialState;
-import lexer.states.number_literal.NumberLiteralInitialState;
-import lexer.states.print.PrintInitialState;
-import lexer.states.string_literal.StringLiteralInitialState;
-import lexer.states.symbols.*;
-import lexer.states.identifier.IdentifierInitialState;
-import lexer.states.let.LetInitialState;
-import lexer.states.string.StringInitialState;
+import lexer.InputStream;
+import lexer.Lexer;
+import lexer.TextStream;
+import lexer.TokenLexer;
+import lexer.token.Token;
+import lexer.token.TokenStream;
+import lexer.token.TokenType;
 import main.parser_interpreter.ConcreteNodeVisitor;
 import main.parser_interpreter.NodeVisitor;
 import parser.*;
@@ -36,12 +34,14 @@ public class Main {
             return;
         }
 
-        List<Token> tkn = lexerRun(sourceCode);
+        Lexer lexer = new TokenLexer();
 
-        tkn.forEach(Printer::printToken);
+        InputStream stream = new TextStream(sourceCode);
 
-        //Change tokens from lexer to parser inputs
-        List<Input> inputs = parserInputSetUp(tkn);
+        TokenStream tokenStream = lexer.lex(stream);
+
+        //Change tokens from lexer_gianni to parser inputs
+        List<Input> inputs = parserInputSetUp(tokenStream);
 
         Node result = parserRun(inputs);
 
@@ -55,59 +55,33 @@ public class Main {
 
     }
 
-    public static List<Token> lexerRun(String sourceCode){
+    public static List<Input> parserInputSetUp(TokenStream tokens){
+        List<Input> res = new ArrayList<>();
+        while (tokens.hasNext()){
+            Token peek = tokens.peek();
+            tokens.consume();
+            res.add(new ConcreteInput(fromLexerToParserType(peek.getType()), peek.getContent()));
+        }
 
-        CharSupplier charSupplier = new ConcreteCharSupplier(sourceCode);
-
-        List<LexerAutomata> automatas = Stream.of(
-                new ConcreteLexerAutomata(new WhiteSpaceInitialState(), TokenType.WHITESPACE),
-                new ConcreteLexerAutomata(new ColonInitialState(), TokenType.COLON),
-                new ConcreteLexerAutomata(new SemiColonInitialState(), TokenType.SEMI_COLON),
-                new ConcreteLexerAutomata(new EqualsInitialState(), TokenType.EQUALS),
-                new ConcreteLexerAutomata(new MinusInitialState(), TokenType.MINUS),
-                new ConcreteLexerAutomata(new NewLineInitialState(), TokenType.NEW_LINE),
-                new ConcreteLexerAutomata(new PlusInitialState(), TokenType.PLUS),
-                new ConcreteLexerAutomata(new MultiplyInitialState(), TokenType.MULTIPLY),
-                new ConcreteLexerAutomata(new DivideInitialState(), TokenType.DIVIDE),
-                new ConcreteLexerAutomata(new OpenParenthesisInitialState(), TokenType.OPEN_PARENTHESIS),
-                new ConcreteLexerAutomata(new CloseParenthesisInitialState(), TokenType.CLOSE_PARENTHESIS),
-                new ConcreteLexerAutomata(new LetInitialState(), TokenType.LET),
-                new ConcreteLexerAutomata(new StringLiteralInitialState(), TokenType.STRING_LITERAL),
-                new ConcreteLexerAutomata(new NumberLiteralInitialState(), TokenType.NUMERIC_LITERAL),
-                new ConcreteLexerAutomata(new StringInitialState(), TokenType.STRING),
-                new ConcreteLexerAutomata(new NumberInitialState(), TokenType.NUMBER),
-                new ConcreteLexerAutomata(new PrintInitialState(), TokenType.PRINT),
-                new ConcreteLexerAutomata(new IdentifierInitialState(), TokenType.IDENTIFIER)
-        ).collect(Collectors.toList());
-
-        Lexer lexer = new ConcreteLexer(automatas);
-
-        return lexer.lex(charSupplier);
+        return res;
     }
 
-    public static List<Input> parserInputSetUp(List<Token> tokens){
-        return tokens.stream()
-                .map(tkn -> new ConcreteInput(fromLexerToParserType(tkn), tkn.getContent()))
-                .filter(inp -> inp.getType() != null)
-                .collect(Collectors.toList());
-    }
-
-    public static InputType fromLexerToParserType(Token token){
-        switch (token.getTokenType()){
+    public static InputType fromLexerToParserType(TokenType type){
+        switch (type){
             case LET: return InputType.LET;
-            case NUMERIC_LITERAL: return InputType.NUMERIC_LITERAL;
-            case STRING_LITERAL: return InputType.STRING_LITERAL;
+            case NUMBER: return InputType.NUMERIC_LITERAL;
+            case STRING: return InputType.STRING_LITERAL;
             case PRINT: return InputType.PRINT;
-            case NUMBER: return InputType.NUMBER;
-            case STRING: return InputType.STRING;
-            case OPEN_PARENTHESIS: return InputType.OPEN_PARENTHESIS;
-            case CLOSE_PARENTHESIS: return InputType.CLOSE_PARENTHESIS;
+            case NUMBER_TYPE: return InputType.NUMBER;
+            case STRING_TYPE: return InputType.STRING;
+            case LEFT_PARENTHESIS: return InputType.OPEN_PARENTHESIS;
+            case RIGHT_PARENTHESIS: return InputType.CLOSE_PARENTHESIS;
             case COLON: return InputType.COLON;
             case SEMI_COLON: return InputType.SEMI_COLON;
             case PLUS: return InputType.PLUS;
             case MINUS: return InputType.MINUS;
-            case MULTIPLY: return InputType.MULTIPLY;
-            case DIVIDE: return InputType.DIVIDE;
+            case MULTIPLICATION: return InputType.MULTIPLY;
+            case DIVISION: return InputType.DIVIDE;
             case EQUALS: return InputType.EQUALS;
             case IDENTIFIER: return InputType.IDENTIFIER;
             default: return null;

@@ -1,7 +1,7 @@
 package main;
 
 import interpreter.environment.EnvironmentValue;
-import lexer.Token;
+import lexer_gianni.Token;
 
 public class Printer {
 
